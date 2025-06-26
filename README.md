@@ -1,8 +1,7 @@
 SQUAROT
 =======
 
-SQUAROT is a challenging puzzle game where you rotate sections of a 3×3 grid to arrange numbers from 1 to 9 in order. Features beautiful ASCII art graphics and multiple difficulty levels.
-  
+SQUAROT (SQUAre ROTate) is a challenging puzzle game where you rotate sections of a 3×3 grid to arrange numbers from 1 to 9 in order.    
 
 ## How to Play
 
@@ -45,12 +44,7 @@ Grid Layout:        Sections:
 2. **Medium**: 20 random moves (moderate challenge)
 3. **Hard**: 30 random moves (for puzzle enthusiasts)
 4. **Very Hard**: 40 random moves (expert level)
-
-## Features
-
-- **ASCII Art**: Numbers displayed with colorful block graphics
-- **Terminal Colors**: Full color support for enhanced visual experience
-- **Cross-Platform**: Works on Windows, Linux, and macOS terminals
+ 
 
 ## Building
 
@@ -68,24 +62,11 @@ gcc -o squarot squarot.c
 ```bash
 ./squarot
 ```
-
-## Technical Details
-
-SQUAROT is implemented in pure C with no external dependencies beyond standard libraries.  
-
-The game does not depend on external libraries like ncurses, instead using platform-specific terminal control for maximum portability and minimal footprint.
-
-## Version History
-
-- **v1.0** (2024): C conversion  
-- **v1.0** (2018): Original C# version by Claudio GENIO
-
+ 
 ## License
 
 SQUAROT was originally written in C# by **Claudio GENIO** (2018) and converted to C (2025). 
 
 The project is released under the **BSD 2-Clause License**.
 You can freely use, modify, and distribute it as long as you retain the original copyright notice and license.
----
-
-*Ready to challenge your puzzle-solving skills? Download SQUAROT and see if you can solve it in the minimum number of moves!*
+ 
