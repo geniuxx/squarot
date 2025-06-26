@@ -48,9 +48,9 @@ Grid Layout:        Sections:
 
 ## Features
 
-- **Beautiful ASCII Art**: Numbers displayed with colorful block graphics
+- **ASCII Art**: Numbers displayed with colorful block graphics
 - **Terminal Colors**: Full color support for enhanced visual experience
-- 🖥️ **Cross-Platform**: Works on Windows, Linux, and macOS terminals
+- **Cross-Platform**: Works on Windows, Linux, and macOS terminals
 
 ## Building
 
