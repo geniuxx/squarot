@@ -328,10 +328,10 @@ static void generateInfoPanel(char infoLines[DISPLAY_LINES][INFO_BUFFER_SIZE], c
         strcpy(infoLines[7], "!                          !");
         strcpy(infoLines[8], "!   SELECT DIFFICULTY:     !");
         strcpy(infoLines[9], "!                          !");
-        strcpy(infoLines[10], "! [1] Easy (10 moves)      !");
-        strcpy(infoLines[11], "! [2] Medium (20 moves)    !");
-        strcpy(infoLines[12], "! [3] Hard (30 moves)      !");
-        strcpy(infoLines[13], "! [4] Very Hard (40 moves) !");
+        strcpy(infoLines[10], "! [1] Easy                 !");
+        strcpy(infoLines[11], "! [2] Medium               !");
+        strcpy(infoLines[12], "! [3] Hard                 !");
+        strcpy(infoLines[13], "! [4] Very Hard            !");
         strcpy(infoLines[14], "!                          !");
         strcpy(infoLines[15], "! Press 1, 2, 3, or 4      !");
         strcpy(infoLines[16], "!                          !");
