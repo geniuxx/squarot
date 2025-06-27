@@ -1,11 +1,11 @@
 SQUAROT
 =======
 
-SQUAROT (SQUAre ROTate) is a challenging puzzle game where you rotate sections of a 3×3 grid to arrange numbers from 1 to 9 in order.    
+SQUAROT (SQUAre ROTate) is a challenging puzzle game where you rotate sections of a 3x3 grid to arrange numbers from 1 to 9 in order.    
 
 ## How to Play
 
-The goal is simple: arrange the numbers 1 through 9 in sequential order on a 3×3 grid by rotating sections.
+The goal is simple: arrange the numbers 1 through 9 in sequential order on a 3x3 grid by rotating sections.
 
 **Usage:** `squarot`
 
@@ -20,7 +20,7 @@ The goal is simple: arrange the numbers 1 through 9 in sequential order on a 3×
 
 ## Game Mechanics
 
-Each section rotates 4 numbers in a 2×2 pattern:
+Each section rotates 4 numbers in a 2x2 pattern:
 
 ```
 Grid Layout:        Sections:
@@ -68,5 +68,4 @@ gcc -o squarot squarot.c
 SQUAROT was originally written in C# by **Claudio GENIO** (2018) and converted to C (2025). 
 
 The project is released under the **BSD 2-Clause License**.
-You can freely use, modify, and distribute it as long as you retain the original copyright notice and license.
- 
+You can freely use, modify, and distribute it as long as you retain the original copyright notice and license. 

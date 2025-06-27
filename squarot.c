@@ -1,5 +1,5 @@
 /*
- * SQUAROT --  SQUAre ROTation is a puzzle game where you rotate sections of a 3x3 grid to order
+ * SQUAROT --  SQUAre ROTate is a puzzle game where you rotate sections of a 3x3 grid to order
  *             numbers from 1 to 9. Features beautiful ASCII art graphics,
  *             multiple difficulty levels, and intuitive gameplay mechanics.
  *
@@ -32,29 +32,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * -----------------------------------------------------------------------
- *
- * Game Rules:
- * - The goal is to arrange numbers 1-9 in order on a 3x3 grid
- * - Press A, B, C, D to rotate different sections of the grid clockwise
- * - Each section rotates 4 numbers in a 2x2 pattern:
- *   * A: top-left section     * B: top-right section  
- *   * C: bottom-left section  * D: bottom-right section
- * - Choose difficulty level (1-4) to set initial shuffle complexity
- * - Win by getting all numbers in sequence: 1,2,3,4,5,6,7,8,9
- *
- * Controls:
- * - A/B/C/D: Rotate sections
- * - ESC: Exit game
- * - 1-4: Select difficulty level
- * - S/N: Start new game / Quit
- *
- * Features:
- * - Colorful ASCII art number display
- * - Multiple difficulty levels
- * - Move counter
- * - Intelligent shuffling algorithm
- * - Cross-platform terminal support
+ * -----------------------------------------------------------------------  
  */
 
 #include <stdio.h>
@@ -67,7 +45,7 @@
 
 #define SQUAROT_VERSION "1.0.0"
 
-/* Optimized constants */
+/* constants */
 #define BOARD_SIZE 9
 #define DIGIT_ROWS 5
 #define DIGIT_COLS 4
@@ -84,7 +62,7 @@ static const char* const VDIVISOR_LEFT_FILL = "...|";
 static const char* const VDIVISOR_RIGHT_FILL = "|...";
 static const char* const VDIVISOR = "..*";
 
-/* Enumerations for clarity */
+/* Enumerations */
 typedef enum {
     BOX_A = 1,
     BOX_B,
@@ -155,6 +133,12 @@ static const int BOX_ROTATIONS[MAX_LEVEL][4][2] = {
     {{4, 5}, {5, 8}, {8, 7}, {7, 4}}
 };
 
+/* Forward declarations */
+static void displayBoardWithMode(const GameState* game, int showLevelSelect);
+
+/*
+* Set console color
+*/
 static inline void setConsoleColor(ConsoleColor foreground, ConsoleColor background) {
     HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
     
@@ -163,6 +147,9 @@ static inline void setConsoleColor(ConsoleColor foreground, ConsoleColor backgro
     }
 }
 
+/*
+ * Get the ASCII pattern for a digit in a specific row 
+ */
 static inline const char* getDigitPattern(int digit, int row) {
     if (digit < 1 || digit > BOARD_SIZE || row < 0 || row >= DIGIT_ROWS) {
         return "....";
@@ -171,11 +158,16 @@ static inline const char* getDigitPattern(int digit, int row) {
     return DIGIT_PATTERNS[digit - 1][row];
 }
 
+/*
+* Reset console color to default gray on black
+*/
 static inline void resetConsoleColor(void) {
     setConsoleColor(COLOR_GRAY, COLOR_BLACK);
 }
 
-
+/*
+*
+*/
 static void initializeGame(GameState* game) {
     int i;
     for (i = 0; i < BOARD_SIZE; i++) {
@@ -249,7 +241,7 @@ static void renderCharacter(char ch, int* flags) {
     switch (ch) {
         case '!': flags[0] = !flags[0]; return;
         case '&': flags[1] = !flags[1]; return;
-        case '<': flags[2] = !flags[2]; return;
+        case '@': flags[2] = !flags[2]; return;
     }
     
     if (flags[0]) {
@@ -306,9 +298,9 @@ static void generateSeparator(char lines[3][INFO_BUFFER_SIZE], const char* box1,
 }
 
 /* 
- * Info panel
+ * Info panel with level selection support
  */
-static void generateInfoPanel(char infoLines[DISPLAY_LINES][INFO_BUFFER_SIZE], const GameState* game) {
+static void generateInfoPanel(char infoLines[DISPLAY_LINES][INFO_BUFFER_SIZE], const GameState* game, int showLevelSelect) {
     int i;
     /* Initialize all lines */
     for (i = 0; i < DISPLAY_LINES; i++) {
@@ -320,39 +312,65 @@ static void generateInfoPanel(char infoLines[DISPLAY_LINES][INFO_BUFFER_SIZE], c
         "! _  _  , ,  _   _   _  ___!",
         "!(_ | | | | |_| |_) | |  | !",
         "!__)|_\\ |_| | | | \\ |_|  | !",
-        "!--------------------------!"
+        "!--------------------------!",
+        "! ver." SQUAROT_VERSION " !"
     };
     
-    for (i = 0; i < 4; i++) {
+    for (i = 0; i < 5; i++) {
         strcpy(infoLines[i], header[i]);
     }
     
     /* Footer */
-    strcpy(infoLines[20], "&ver 1.0 &");
+    strcpy(infoLines[20], "&made with !<3! by Claudio Genio&");
     
-    /* Attempts */
-    snprintf(infoLines[9], INFO_BUFFER_SIZE, "!Attempts :%d!", game->attempts);
-    
-    /* Victory message */
-    if (game->is_won) {
-        strcpy(infoLines[11], "<+------------------------+<");
-        strcpy(infoLines[12], "<|       You Win...       |<");
-        strcpy(infoLines[13], "<+------------------------+<");
+    if (showLevelSelect) {
+        /* Level selection mode */
+        strcpy(infoLines[7], "!                          !");
+        strcpy(infoLines[8], "!   SELECT DIFFICULTY:     !");
+        strcpy(infoLines[9], "!                          !");
+        strcpy(infoLines[10], "! [1] Easy (10 moves)      !");
+        strcpy(infoLines[11], "! [2] Medium (20 moves)    !");
+        strcpy(infoLines[12], "! [3] Hard (30 moves)      !");
+        strcpy(infoLines[13], "! [4] Very Hard (40 moves) !");
+        strcpy(infoLines[14], "!                          !");
+        strcpy(infoLines[15], "! Press 1, 2, 3, or 4      !");
+        strcpy(infoLines[16], "!                          !");
+    } else if (game->is_won) {
+        /* Victory message */
+        strcpy(infoLines[11], "@+------------------------+@");
+        strcpy(infoLines[12], "@|       You Win...       |@");
+        strcpy(infoLines[13], "@<+------------------------+@");
+        strcpy(infoLines[15], "! Press Y for new game     !");
+        strcpy(infoLines[16], "! Press N to quit          !");
         strcpy(infoLines[17], " ");
+    } else {
+        /* Normal game mode - show attempts */
+        snprintf(infoLines[9], INFO_BUFFER_SIZE, "!Attempts :%d!", game->attempts);
+        strcpy(infoLines[11], "!                          !");
+        strcpy(infoLines[12], "! Controls:                !");
+        strcpy(infoLines[13], "! A - Rotate top-left      !");
+        strcpy(infoLines[14], "! B - Rotate top-right     !");
+        strcpy(infoLines[15], "! C - Rotate bottom-left   !");
+        strcpy(infoLines[16], "! D - Rotate bottom-right  !");
+        strcpy(infoLines[17], "! ESC - Exit game          !");
     }
 }
 
 /*
- * Optimized main display
+ * Main display with level selection support
  */
 static void displayBoard(const GameState* game) {
+    displayBoardWithMode(game, 0); /* Normal game mode */
+}
+
+static void displayBoardWithMode(const GameState* game, int showLevelSelect) {
     char lines[DISPLAY_LINES][LINE_BUFFER_SIZE];
     char separators[2][3][INFO_BUFFER_SIZE];
     char infoLines[DISPLAY_LINES][INFO_BUFFER_SIZE];
-    int section, row, i;
+    int  section, row, i;
     
     /* Generate components */
-    generateInfoPanel(infoLines, game);
+    generateInfoPanel(infoLines, game, showLevelSelect);
     generateSeparator(separators[0], "A", "B");
     generateSeparator(separators[1], "C", "D");
     
@@ -397,38 +415,31 @@ static void displayBoard(const GameState* game) {
 }
 
 /*
- * Level select
+ * Integrated level selection within the game interface
  */
 static int selectDifficultyLevel(void) {
-    const char* levels[] = {
-        "! 1 - Easy (10 moves) !",
-        "! 2 - Medium (20 moves) !",
-        "! 3 - Hard (30 moves) !",
-        "! 4 - Very Hard (40 moves) !"
-    };
+    GameState tempGame;
+    const int levelMultipliers[] = {10, 20, 30, 40};
     
-    const int levelMultipliers[] = {1, 20, 30, 40};
-    int i;
+    /* Initialize a temporary game state for display */
+    initializeGame(&tempGame);
     
-    system("cls");
-    printf("\n");
-    
-    /* Display header */
-    printf("  SQUAROT - Difficulty Selection\n");
-    printf("  ===============================\n\n");
-    
-    for (i = 0; i < MAX_LEVEL; i++) {
-        printf("  %s\n", levels[i]);
+    while (1) {
+        /* Show level selection in the right panel */
+        displayBoardWithMode(&tempGame, 1); /* 1 = show level select */
+        
+        char choice = getch();
+        
+        if (choice >= '1' && choice <= '4') {
+            return levelMultipliers[choice - '1'];
+        }
+        
+        if (choice == 27) { /* ESC */
+            exit(0);
+        }
+        
+        /* Invalid input, continue loop */
     }
-    
-    printf("\n  Select (1-4): ");
-    
-    char choice;
-    do {
-        choice = getch();
-    } while (choice < '1' || choice > '4');
-    
-    return levelMultipliers[choice - '1'];
 }
 
 /*
@@ -457,7 +468,7 @@ static BoxType getPlayerInput(void) {
 }
 
 /*
- * Optimized main game loop
+ *  main game loop
  */
 static void playGame(GameState* game) {
     while (!game->is_won) {
@@ -474,7 +485,7 @@ static void playGame(GameState* game) {
 }
 
 /*
- * Optimized main function
+ *  main 
  */
 int main(void) {
     GameState game;
