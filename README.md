@@ -3,33 +3,8 @@ SQUAROT
 
 SQUAROT (SQUAre ROTate) is a challenging puzzle game where you rotate sections of a 3x3 grid to arrange numbers from 1 to 9 in order.    
 
-```
-  ####         ####         #      ||  _  _  , ,  _   _   _  ___
-  #               #         #      || (_ | | | | |_| |_) | |  |
-  ####---------  ##---------# #    || __)|_\ |_| | | | \ |_|  |
-  #  #            #         ####   || --------------------------
-  ####         ####           #    ||  ver.1.0.0
-     |                      |      ||
-     |    A            B    |      ||
-     |                      |      ||
-  ####          ##          ####   ||
-  #  #           #          #  #   || Attempts :0
-     #---------  # ---------####   ||
-     #           #             #   ||
-     #           #          ####   ||  Controls:
-     |                      |      ||  A - Rotate top-left
-     |    C            D    |      ||  B - Rotate top-right
-     |                      |      ||  C - Rotate bottom-left
-  ####         ####         ####   ||  D - Rotate bottom-right
-     #         #  #         #      ||  ESC - Exit game
-  ####---------####---------####   ||
-  #            #  #            #   ||
-  ####         ####         ####   || made with <3 by Claudio Genio
-
-Press A, B, C, D to rotate sections, ESC to exit:
-```
-
-
+ ![squarot screen shot](www.colpodigenio.it/github/squarotc/screenshpt01.png)
+ 
 ## How to Play
 
 The goal is simple: arrange the numbers 1 through 9 in sequential order on a 3x3 grid by rotating sections.
