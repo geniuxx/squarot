@@ -3,7 +3,7 @@ SQUAROT
 
 SQUAROT (SQUAre ROTate) is a challenging puzzle game where you rotate sections of a 3x3 grid to arrange numbers from 1 to 9 in order.    
 
- ![squarot screen shot](www.colpodigenio.it/github/squarotc/screenshpt01.png)
+ ![squarot screen shot](https://www.colpodigenio.it/github/squarotc/screenshot01.png)
  
 ## How to Play
 
